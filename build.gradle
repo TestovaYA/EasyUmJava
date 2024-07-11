@@ -12,8 +12,25 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'com.google.guava:guava:11.0.2' //add guava
 }
 
 test {
     useJUnitPlatform()
 }
+
+//build-script plugin
+class MyBuildScriptPlugin implements Plugin<Project>{
+    void apply(Project project){
+        project.task('myBuildScriptTask'){
+            doLast {
+                println 'my task in my build-script plugin'
+            }
+        }
+    }
+}
+
+apply plugin: MyBuildScriptPlugin
+
+//add script plugin
+apply from: 'plugin.gradle'

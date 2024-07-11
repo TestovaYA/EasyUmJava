@@ -1,0 +1,12 @@
+//script plugin
+class MyScriptPlugin implements Plugin<Project>{
+    void apply(Project project){
+        project.task('myScriptTask'){
+            doLast {
+                println 'my task in my script plugin'
+            }
+        }
+    }
+}
+
+apply plugin: MyScriptPlugin

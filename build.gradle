@@ -18,3 +18,19 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+//build-script plugin
+class MyBuildScriptPlugin implements Plugin<Project>{
+    void apply(Project project){
+        project.task('myBuildScriptTask'){
+            doLast {
+                println 'my task in my build-script plugin'
+            }
+        }
+    }
+}
+
+apply plugin: MyBuildScriptPlugin
+
+//add script plugin
+apply from: 'plugin.gradle'

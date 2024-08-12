@@ -1,6 +1,8 @@
 package org.example;
 
-// Конкретный фабричный класс для контрольных пунктов
+/**
+ * Конкретный фабричный класс для контрольных пунктов
+ */
 public class ConcreteCheckpointFactory implements CheckpointFactory {
     @Override
     public Checkpoint createCheckpoint(String name, double latitude, double longitude, Double penalty) {

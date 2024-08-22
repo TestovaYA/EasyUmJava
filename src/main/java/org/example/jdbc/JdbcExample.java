@@ -50,6 +50,9 @@ public class JdbcExample {
             endTime = System.nanoTime();
             duration = endTime - startTime;
             System.out.println("Время получения " + ENTITY_COUNT + " сущностей  в наносекундах: " + duration);
+
+            ownerRepository.deleteAll();
+            catRepository.deleteAll();
         } catch (SQLException e) {
             e.printStackTrace();
         }

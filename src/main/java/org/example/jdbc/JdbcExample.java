@@ -11,13 +11,19 @@ public class JdbcExample {
     private static final String USER = "root";
     private static final String PASSWORD = "admin";
 
+    public static final int ENTITY_COUNT = 100;
+
     public static void main(String[] args) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-
             OwnerRepository ownerRepository = new OwnerRepository(connection);
             CatRepository catRepository = new CatRepository(connection);
 
-            for (int i = 0; i < 50; i++) {
+            long startTime;
+            long endTime;
+            long duration;
+
+            startTime = System.nanoTime();
+            for (int i = 0; i < ENTITY_COUNT/2; i++) {
                 Owner owner = new Owner();
                 owner.setName("Owner " + (i + 1));
                 owner.setBirthDate(new java.util.Date(System.currentTimeMillis()));
@@ -32,16 +38,18 @@ public class JdbcExample {
                 catRepository.save(cat);
             }
 
-            System.out.println("All Owners:");
+            endTime = System.nanoTime();
+            duration = endTime - startTime;
+            System.out.println("Время добавления " + ENTITY_COUNT + " сущностей  в наносекундах: " + duration);
+
+            startTime = System.nanoTime();
+
             List<Owner> owners = ownerRepository.getAll();
-            for (Owner o : owners) {
-                System.out.println("Owner ID: " + o.getId() + ", Name: " + o.getName() + ", Birth Date: " + o.getBirthDate());
-                System.out.println("  Cats:");
-                List<Cat> cats = catRepository.getAllByParentId(o.getId());
-                for (Cat c : cats) {
-                    System.out.println("  - Cat ID: " + c.getId() + ", Name: " + c.getName() + ", Color: " + c.getColor());
-                }
-            }
+            List<Cat> cats = catRepository.getAll();
+
+            endTime = System.nanoTime();
+            duration = endTime - startTime;
+            System.out.println("Время получения " + ENTITY_COUNT + " сущностей  в наносекундах: " + duration);
         } catch (SQLException e) {
             e.printStackTrace();
         }

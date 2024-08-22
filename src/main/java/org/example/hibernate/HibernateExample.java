@@ -10,11 +10,18 @@ import java.util.Date;
 import java.util.List;
 
 public class HibernateExample {
+    public static final int ENTITY_COUNT = 100;
+
     public static void main(String[] args) {
         try (SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory(); var session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
 
-            for (int i = 1; i <= 50; i++) {
+            long startTime;
+            long endTime;
+            long duration;
+
+            startTime = System.nanoTime();
+            for (int i = 1; i <ENTITY_COUNT/2; i++) {
                 Owner owner = new Owner();
                 owner.setName("Owner " + i);
                 owner.setBirthDate(new Date(System.currentTimeMillis()));
@@ -22,7 +29,7 @@ public class HibernateExample {
                 session.save(owner);
             }
 
-            for (int i = 1; i <= 50; i++) {
+            for (int i = 1; i <ENTITY_COUNT/2; i++) {
                 Cat cat = new Cat();
                 cat.setName("Cat " + i);
                 cat.setBirthDate(new Date(System.currentTimeMillis()));
@@ -34,20 +41,21 @@ public class HibernateExample {
             }
 
             transaction.commit();
+            endTime = System.nanoTime();
+            duration = endTime - startTime;
+            System.out.println("Время добавления " + ENTITY_COUNT + " сущностей  в наносекундах: " + duration);
 
-            System.out.println("All Owners:");
+            startTime = System.nanoTime();
+
             Query<Owner> ownerQuery = session.createQuery("FROM Owner", Owner.class);
             List<Owner> ownerList = ownerQuery.getResultList();
-            for (Owner owner : ownerList) {
-                System.out.println("Owner ID: " + owner.getId() + ", Name: " + owner.getName() + ", BirthDate: " + owner.getBirthDate());
-            }
 
-            System.out.println("All Cats:");
             Query<Cat> catQuery = session.createQuery("FROM Cat", Cat.class);
             List<Cat> catList = catQuery.getResultList();
-            for (Cat cat : catList) {
-                System.out.println("Cat ID: " + cat.getId() + ", Name: " + cat.getName() + ", Breed: " + cat.getBreed() + ", Color: " + cat.getColor() + ", Owner ID: " + cat.getOwner().getId());
-            }
+
+            endTime = System.nanoTime();
+            duration = endTime - startTime;
+            System.out.println("Время получения " + ENTITY_COUNT + " сущностей  в наносекундах: " + duration);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -12,17 +12,24 @@ import java.util.List;
 
 
 public class MyBatisExample {
+    public static final int ENTITY_COUNT = 100;
+
     public static void main(String[] args) {
         try {
             String resource = "mybatis-config.xml";
             InputStream inputStream = Resources.getResourceAsStream(resource);
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 
+            long startTime;
+            long endTime;
+            long duration;
+
             try (SqlSession session = sqlSessionFactory.openSession()) {
                 OwnerMapper ownerMapper = session.getMapper(OwnerMapper.class);
                 CatMapper catMapper = session.getMapper(CatMapper.class);
 
-                for (int i = 0; i < 50; i++) {
+                startTime = System.nanoTime();
+                for (int i = 0; i < ENTITY_COUNT/2; i++) {
                     Owner owner = new Owner();
                     owner.setName("Owner " + (i + 1));
                     owner.setBirthDate(new Date(System.currentTimeMillis()));
@@ -38,15 +45,23 @@ public class MyBatisExample {
                     catMapper.save(cat);
                 }
 
+                endTime = System.nanoTime();
+                duration = endTime - startTime;
+                System.out.println("Время добавления " + ENTITY_COUNT + " сущностей  в наносекундах: " + duration);
+            }
+
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                OwnerMapper ownerMapper = session.getMapper(OwnerMapper.class);
+                CatMapper catMapper = session.getMapper(CatMapper.class);
+
+                startTime = System.nanoTime();
+
                 List<Owner> owners = ownerMapper.getAll();
-                for (Owner o : owners) {
-                    System.out.println("Owner ID: " + o.getId() + ", Name: " + o.getName() + ", Birth Date: " + o.getBirthDate());
-                    System.out.println("  Cats:");
-                    List<Cat> cats = catMapper.getAllByOwnerId(o.getId());
-                    for (Cat c : cats) {
-                        System.out.println("  - Cat ID: " + c.getId() + ", Name: " + c.getName() + ", Color: " + c.getColor());
-                    }
-                }
+                List<Cat> cats = catMapper.getAll();
+
+                endTime = System.nanoTime();
+                duration = endTime - startTime;
+                System.out.println("Время получения " + ENTITY_COUNT + " сущностей  в наносекундах: " + duration);
             }
         } catch (Exception e) {
             e.printStackTrace();

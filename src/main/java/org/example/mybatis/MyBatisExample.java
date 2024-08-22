@@ -44,6 +44,7 @@ public class MyBatisExample {
                     cat.setOwnerId(owner.getId());
                     catMapper.save(cat);
                 }
+                session.commit();
 
                 endTime = System.nanoTime();
                 duration = endTime - startTime;
@@ -59,9 +60,20 @@ public class MyBatisExample {
                 List<Owner> owners = ownerMapper.getAll();
                 List<Cat> cats = catMapper.getAll();
 
+                session.commit();
+
                 endTime = System.nanoTime();
                 duration = endTime - startTime;
                 System.out.println("Время получения " + ENTITY_COUNT + " сущностей  в наносекундах: " + duration);
+            }
+
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                OwnerMapper ownerMapper = session.getMapper(OwnerMapper.class);
+                CatMapper catMapper = session.getMapper(CatMapper.class);
+
+                ownerMapper.deleteAll();
+                catMapper.deleteAll();
+                session.commit();
             }
         } catch (Exception e) {
             e.printStackTrace();

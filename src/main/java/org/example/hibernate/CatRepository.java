@@ -54,4 +54,8 @@ public class CatRepository implements Repository<Cat> {
                 .setParameter("ownerId", ownerId)
                 .getResultList();
     }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

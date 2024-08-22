@@ -1,5 +1,6 @@
 package org.example.hibernate;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 public interface Repository<T> {
@@ -16,4 +17,6 @@ public interface Repository<T> {
     T getById(long id);
 
     List<T> getAll();
+
+    void setEntityManager(EntityManager entityManager);
 }

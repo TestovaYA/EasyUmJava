@@ -48,4 +48,9 @@ public class OwnerRepository implements Repository<Owner> {
     public List<Owner> getAll() {
         return entityManager.createQuery("FROM Owner", Owner.class).getResultList();
     }
+
+    @Override
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }

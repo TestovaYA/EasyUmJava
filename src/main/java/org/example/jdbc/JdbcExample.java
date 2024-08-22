@@ -1,5 +1,7 @@
 package org.example.jdbc;
 
+import org.example.Color;
+
 import java.sql.*;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +27,7 @@ public class JdbcExample {
                 cat.setName("Cat " + i);
                 cat.setBirthDate(new Date(System.currentTimeMillis()));
                 cat.setBreed("Breed " + i);
-                cat.setColor(Cat.Color.values()[i % Cat.Color.values().length]);
+                cat.setColor(Color.values()[i % Color.values().length]);
                 cat.setOwnerId(owner.getId());
                 catRepository.save(cat);
             }

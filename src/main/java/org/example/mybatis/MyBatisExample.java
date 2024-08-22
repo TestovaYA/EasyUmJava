@@ -4,6 +4,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.example.Color;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -32,7 +33,7 @@ public class MyBatisExample {
                     cat.setName("Cat " + i);
                     cat.setBirthDate(new Date(System.currentTimeMillis()));
                     cat.setBreed("Breed " + i);
-                    cat.setColor(Cat.Color.values()[i % Cat.Color.values().length]);
+                    cat.setColor(Color.values()[i % Color.values().length]);
                     cat.setOwnerId(owner.getId());
                     catMapper.save(cat);
                 }

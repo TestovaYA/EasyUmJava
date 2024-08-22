@@ -1,12 +1,10 @@
 package org.example.jdbc;
 
+import org.example.Color;
+
 import java.util.Date;
 
 public class Cat {
-    public enum Color {
-        WHITE, ORANGE, BROWN, GRAY, BLACK
-    }
-
     private int id;
     private String name;
     private Date birthDate;

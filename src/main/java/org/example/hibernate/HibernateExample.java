@@ -1,5 +1,6 @@
 package org.example.hibernate;
 
+import org.example.Color;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.Transaction;
@@ -26,7 +27,7 @@ public class HibernateExample {
                 cat.setName("Cat " + i);
                 cat.setBirthDate(new Date(System.currentTimeMillis()));
                 cat.setBreed("Breed " + (i % 5));
-                cat.setColor(Cat.Color.values()[i % Cat.Color.values().length]);
+                cat.setColor(Color.values()[i % Color.values().length]);
                 cat.setOwner(session.get(Owner.class, i));
 
                 session.save(cat);

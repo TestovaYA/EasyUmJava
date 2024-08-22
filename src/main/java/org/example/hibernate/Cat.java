@@ -1,15 +1,13 @@
 package org.example.hibernate;
 
+import org.example.Color;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Table(name = "cat")
 public class Cat {
-    public enum Color {
-        WHITE, ORANGE, BROWN, GRAY, BLACK
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

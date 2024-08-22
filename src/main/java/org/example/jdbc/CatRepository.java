@@ -1,5 +1,7 @@
 package org.example.jdbc;
 
+import org.example.Color;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +91,7 @@ public class CatRepository implements Repository<Cat> {
                 cat.setName(resultSet.getString("name"));
                 cat.setBirthDate(resultSet.getDate("birth_date"));
                 cat.setBreed(resultSet.getString("breed"));
-                cat.setColor(Cat.Color.valueOf(resultSet.getString("color")));
+                cat.setColor(Color.valueOf(resultSet.getString("color")));
                 cat.setOwnerId(resultSet.getInt("owner_id"));
                 return cat;
             }
@@ -110,7 +112,7 @@ public class CatRepository implements Repository<Cat> {
                 cat.setName(resultSet.getString("name"));
                 cat.setBirthDate(resultSet.getDate("birth_date"));
                 cat.setBreed(resultSet.getString("breed"));
-                cat.setColor(Cat.Color.valueOf(resultSet.getString("color")));
+                cat.setColor(Color.valueOf(resultSet.getString("color")));
                 cat.setOwnerId(resultSet.getInt("owner_id"));
                 cats.add(cat);
             }
@@ -132,7 +134,7 @@ public class CatRepository implements Repository<Cat> {
                 cat.setName(resultSet.getString("name"));
                 cat.setBirthDate(resultSet.getDate("birth_date"));
                 cat.setBreed(resultSet.getString("breed"));
-                cat.setColor(Cat.Color.valueOf(resultSet.getString("color")));
+                cat.setColor(Color.valueOf(resultSet.getString("color")));
                 cat.setOwnerId(resultSet.getInt("owner_id"));
                 cats.add(cat);
             }

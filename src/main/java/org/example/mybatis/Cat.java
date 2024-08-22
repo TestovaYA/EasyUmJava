@@ -1,12 +1,10 @@
 package org.example.mybatis;
 
+import org.example.Color;
+
 import java.util.Date;
 
 public class Cat {
-    public enum Color {
-        WHITE, ORANGE, BROWN, GRAY, BLACK
-    }
-
     private Integer id;
     private String name;
     private Date birthDate;

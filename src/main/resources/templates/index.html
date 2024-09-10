@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Получить пользователя по id</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/css/bootstrap.min.css">
+</head>
+<body class="container mt-4">
+<h1>Получить пользователя по id</h1>
+
+<form action="/getUser" method="get">
+    <div class="form-group">
+        <input type="number" name="id" class="form-control" required placeholder="Введите ID" />
+    </div>
+    <button type="submit" class="btn btn-primary">Получить</button>
+</form>
+
+<div th:if="${message}" class="alert alert-danger mt-3">
+    <p th:text="${message}"></p>
+</div>
+
+<div th:if="${user}">
+    <h3>Данные пользователя:</h3>
+    <p>ID: <span th:text="${user.id}"></span></p>
+    <p>Имя: <span th:text="${user.name}"></span></p>
+    <p>Логин: <span th:text="${user.login}"></span></p>
+    <p>Пароль: <span th:text="${user.password}"></span></p>
+</div>
+
+<h2 class="mt-5">Случайный пользователь</h2>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Имя</th>
+        <th>Логин</th>
+        <th>Пароль</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr >
+        <td th:text="${randomUser.id}"></td>
+        <td th:text="${randomUser.name}"></td>
+        <td th:text="${randomUser.login}"></td>
+        <td th:text="${randomUser.password}"></td>
+    </tr>
+
+    </tbody>
+</table>
+</body>
+</html>
